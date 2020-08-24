@@ -21,14 +21,15 @@ namespace TextEditer31039
             InitializeComponent();
         }
 
-        //終了
-        private void ExitXToolStripMenuItem_Click(object sender, EventArgs e)
+        //ファイルプルダウンメニュー
+        //新規作成メニュー
+        private void NewNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //アプリケーション終了
-            Application.Exit();
+            rtTextArea.Text = "";
+            this.fileName = "";
         }
 
-        //開く
+        //開くメニュー
         private void OpenOToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //開くダイアログを表示
@@ -43,7 +44,7 @@ namespace TextEditer31039
             }
         }
 
-        //上書き保存
+        //上書き保存メニュー
         private void SaveSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //this.fileName != "" ? FileSave(fileName) : SaveNameAToolStripMenuItem_Click(sender, e);
@@ -58,7 +59,7 @@ namespace TextEditer31039
             }
         }
 
-        //名前を付けて保存
+        //名前を付けて保存メニュー
         private void SaveNameAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //[名前を付けて保存]ダイアログを表示
@@ -79,6 +80,24 @@ namespace TextEditer31039
             {
                 sw.WriteLine(rtTextArea.Text);
 
+            }
+        }
+
+        //終了メニュー
+        private void ExitXToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //アプリケーション終了
+            Application.Exit();
+        }
+
+
+        //編集プルダウンメニュー
+        //元に戻すメニュー
+        private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rtTextArea.CanUndo == true)
+            {
+                rtTextArea.Undo();
             }
         }
     }

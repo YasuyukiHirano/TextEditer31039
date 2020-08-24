@@ -100,6 +100,7 @@
             this.NewNToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.NewNToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.NewNToolStripMenuItem.Text = "新規作成(&N)";
+            this.NewNToolStripMenuItem.Click += new System.EventHandler(this.NewNToolStripMenuItem_Click);
             // 
             // OpenOToolStripMenuItem
             // 
@@ -172,6 +173,7 @@
             this.UndoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
             this.UndoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.UndoToolStripMenuItem.Text = "元に戻す(&U)";
+            this.UndoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItem_Click);
             // 
             // RedoToolStripMenuItem
             // 
