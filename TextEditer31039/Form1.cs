@@ -21,6 +21,8 @@ namespace TextEditer31039
             InitializeComponent();
         }
 
+
+
         //ファイルプルダウンメニュー
         //新規作成メニュー
         private void NewNToolStripMenuItem_Click(object sender, EventArgs e)
@@ -91,14 +93,100 @@ namespace TextEditer31039
         }
 
 
+
         //編集プルダウンメニュー
+        private void EditToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            initButton();
+        }
         //元に戻すメニュー
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (rtTextArea.CanUndo == true)
+            rtTextArea.Undo();        
+        }
+
+        //やり直しメニュー
+        private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Redo();
+        }
+
+        //切り取りメニュー
+        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Cut();
+        }
+
+        //コピーメニュー
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Copy();           
+        }
+
+        //貼り付けメニュー
+        private void PeastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Paste();
+        }
+
+        //削除メニュー
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.SelectedText = "";
+        }
+
+        //色メニュー
+        private void ColerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog MyDialog = new ColorDialog();
+            // Keeps the user from selecting a custom color.
+            MyDialog.AllowFullOpen = false;
+            // Allows the user to get help. (The default is false.)
+            MyDialog.ShowHelp = true;
+            // Sets the initial color select to the current text color.
+            MyDialog.Color = rtTextArea.ForeColor;
+
+            // Update the text box color if the user clicks OK 
+            if (MyDialog.ShowDialog() == DialogResult.OK)
+                rtTextArea.ForeColor = MyDialog.Color;
+        }
+
+        //フォントメニュー
+        private void FontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontDialog font = new FontDialog();
+
+            fdFont.Font = rtTextArea.Font;
+            fdFont.Color = rtTextArea.ForeColor;
+
+            if (fdFont.ShowDialog() != DialogResult.Cancel)
             {
-                rtTextArea.Undo();
+                rtTextArea.Font = fdFont.Font;
+                rtTextArea.ForeColor = fdFont.Color;
             }
+        }
+
+        //マスクするメソッド
+        void initButton()   //初期状態では変更ボタンはマスク
+        {
+            if (rtTextArea.Text == "")
+            {
+                UndoToolStripMenuItem.Enabled = false;  //元に戻す
+                RedoToolStripMenuItem.Enabled = false;  //やり直し
+                CutToolStripMenuItem.Enabled = false;   //切り取り
+                CopyToolStripMenuItem.Enabled = false;  //コピー
+                DeleteToolStripMenuItem.Enabled = false;    //削除
+            }
+            else
+            {
+                UndoToolStripMenuItem.Enabled = true;  //元に戻す
+                RedoToolStripMenuItem.Enabled = true;  //やり直し
+                CutToolStripMenuItem.Enabled = true;   //切り取り
+                CopyToolStripMenuItem.Enabled = true;  //コピー
+                DeleteToolStripMenuItem.Enabled = true;    //削除
+            }
+
+
         }
     }
 }
