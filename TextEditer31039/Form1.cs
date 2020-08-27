@@ -214,5 +214,15 @@ namespace TextEditer31039
                 //「キャンセル」が選択された時
             }
         }
+
+        //フォームを閉じるときに確認
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (rtTextArea.Modified)
+            {
+                Message(sender, e);
+            }
+            Application.Exit();
+        }
     }
 }
