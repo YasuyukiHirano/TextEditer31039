@@ -27,13 +27,21 @@ namespace TextEditer31039
         //新規作成メニュー
         private void NewNToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(rtTextArea.Modified)
+            {
+                Message(sender, e);             
+            }
             rtTextArea.Text = "";
-            this.fileName = "";
+            this.fileName = "";           
         }
 
         //開くメニュー
         private void OpenOToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (rtTextArea.Modified)
+            {
+                Message(sender, e);
+            }
             //開くダイアログを表示
             if (ofdFileOpen.ShowDialog() == DialogResult.OK)
             {
@@ -88,6 +96,10 @@ namespace TextEditer31039
         //終了メニュー
         private void ExitXToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (rtTextArea.Modified)
+            {
+                Message(sender, e);
+            }
             //アプリケーション終了
             Application.Exit();
         }
@@ -138,31 +150,18 @@ namespace TextEditer31039
         //色メニュー
         private void ColerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorDialog MyDialog = new ColorDialog();
-            // Keeps the user from selecting a custom color.
-            MyDialog.AllowFullOpen = false;
-            // Allows the user to get help. (The default is false.)
-            MyDialog.ShowHelp = true;
-            // Sets the initial color select to the current text color.
-            MyDialog.Color = rtTextArea.ForeColor;
-
-            // Update the text box color if the user clicks OK 
-            if (MyDialog.ShowDialog() == DialogResult.OK)
-                rtTextArea.ForeColor = MyDialog.Color;
+            if (cdColor.ShowDialog() == DialogResult.OK)
+            {
+                rtTextArea.ForeColor = cdColor.Color;
+            }              
         }
 
         //フォントメニュー
         private void FontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FontDialog font = new FontDialog();
-
-            fdFont.Font = rtTextArea.Font;
-            fdFont.Color = rtTextArea.ForeColor;
-
-            if (fdFont.ShowDialog() != DialogResult.Cancel)
+            if (fdFont.ShowDialog() == DialogResult.OK)
             {
                 rtTextArea.Font = fdFont.Font;
-                rtTextArea.ForeColor = fdFont.Color;
             }
         }
 
@@ -187,6 +186,33 @@ namespace TextEditer31039
             }
 
 
+        }
+
+        //未保存で警告を表示
+        private void Message(object sender , EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("ファイルを保存しますか？",
+                "質問",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button2);
+
+            //何が選択されたか調べる
+            if (result == DialogResult.Yes)
+            {
+                //「はい」が選択された時
+                SaveSToolStripMenuItem_Click(sender, e);           
+            }
+            else if (result == DialogResult.No)
+            {
+                //「いいえ」が選択された時
+                rtTextArea.Text = "";
+                fileName = "";
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                //「キャンセル」が選択された時
+            }
         }
     }
 }
